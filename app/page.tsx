@@ -110,7 +110,7 @@ export default function Dashboard() {
         <div className="flex items-start justify-between">
           <div className="space-y-3">
             <h1 className="text-5xl font-medium tracking-tight text-white">Near Intents Fee Leaderboard</h1>
-            <p className="text-[#888888] text-lg">Track referral fees and performance</p>
+            <p className="text-[#888888] text-lg">Track referral fees for for 1 click api apps</p>
           </div>
           <a
             href="https://x.com/surgecodes"
