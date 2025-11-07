@@ -190,7 +190,7 @@ export default function Dashboard() {
             <Card className="bg-[#0a0a0a]/80 backdrop-blur-sm border-[#1a1a1a] shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-[0_8px_40px_rgb(0,0,0,0.5)] transition-shadow">
               <CardHeader>
                 <CardTitle className="text-xl font-medium text-white">Top Assets by Volume</CardTitle>
-                <CardDescription className="text-[#888888] text-sm">Inflow vs outflow distribution</CardDescription>
+                <CardDescription className="text-[#888888] text-sm">Green = deposited into intents · Red = withdrawn from intents</CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                 {data.assetFlows.slice(0, 8).map((flow) => {
@@ -232,7 +232,7 @@ export default function Dashboard() {
             <Card className="bg-[#0a0a0a]/80 backdrop-blur-sm border-[#1a1a1a] shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-[0_8px_40px_rgb(0,0,0,0.5)] transition-shadow">
               <CardHeader>
                 <CardTitle className="text-xl font-medium text-white">Top Chains by Volume</CardTitle>
-                <CardDescription className="text-[#888888] text-sm">Inflow vs outflow distribution</CardDescription>
+                <CardDescription className="text-[#888888] text-sm">Green = deposited into intents · Red = withdrawn from intents</CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                 {data.chainFlows.slice(0, 8).map((flow) => {
@@ -275,7 +275,7 @@ export default function Dashboard() {
           <Card className="bg-[#0a0a0a]/80 backdrop-blur-sm border-[#1a1a1a] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-[0_8px_40px_rgb(0,0,0,0.5)] transition-shadow">
             <CardHeader className="pb-6">
               <CardTitle className="text-2xl font-medium text-white">Provider Leaderboard</CardTitle>
-              <CardDescription className="text-[#888888] text-sm">Click to view asset flows</CardDescription>
+              <CardDescription className="text-[#888888] text-sm">Click any row to view asset deposit/withdrawal flows</CardDescription>
             </CardHeader>
             <CardContent className="p-0">
               <div className="grid grid-cols-[auto_1fr_auto_auto_auto] gap-4 px-6 py-4 border-b border-[#1a1a1a] bg-[#0a0a0a]">
