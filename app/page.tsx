@@ -300,7 +300,7 @@ export default function Dashboard() {
           <div className="flex items-start justify-between">
             <div className="space-y-3">
               <h1 className="text-5xl font-medium tracking-tight text-white">Near Intents Fee Dashboard</h1>
-              <p className="text-[#888888] text-lg">This dashboard tracks fees and inflows and outflows for the apps integrating near intents via 1 click api, all data is sourced directly from the explorer api</p>
+              <p className="text-[#888888] text-lg">This dashboard tracks fees, inflows, and outflows specifically for apps integrating NEAR intents via the 1 Click API. It does not reflect all intents volume. All data is sourced directly from the explorer API.</p>
             </div>
             <a
               href="https://x.com/surgecodes"
