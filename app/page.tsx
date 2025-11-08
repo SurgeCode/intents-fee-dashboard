@@ -11,7 +11,7 @@ import { formatCurrency, formatLargeCurrency } from "@/lib/utils"
 import { getTokenIcon, getChainIcon } from "@/constants/icons"
 import type { ProcessedData, TimeHorizon, ProviderAssetFlowData } from "@/types/dashboard"
 
-const DATA_URL = "https://thvomwknsgnklfce.public.blob.vercel-storage.com/referral-fees-processed-KRY57Oar7h98zejOWjwxE69OZYQBvV.json"
+const DATA_URL = "https://thvomwknsgnklfce.public.blob.vercel-storage.com/referral-fees-processed-61tdfci1pyhMgmVOpnVZgt01nGuc0D.json"
 
 export default function Dashboard() {
   const [data, setData] = useState<ProcessedData | null>(null)
