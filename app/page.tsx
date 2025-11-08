@@ -11,7 +11,7 @@ import { formatCurrency, formatLargeCurrency } from "@/lib/utils"
 import { getTokenIcon, getChainIcon } from "@/constants/icons"
 import type { ProcessedData, TimeHorizon, ProviderAssetFlowData } from "@/types/dashboard"
 
-const DATA_URL = "https://thvomwknsgnklfce.public.blob.vercel-storage.com/referral-fees-processed-61tdfci1pyhMgmVOpnVZgt01nGuc0D.json"
+const DATA_URL = "https://thvomwknsgnklfce.public.blob.vercel-storage.com/referral-fees-processed-QHHe1llC3TeFLmWHCUG5FMCGtQG6rX.json"
 
 export default function Dashboard() {
   const [data, setData] = useState<ProcessedData | null>(null)
@@ -95,10 +95,10 @@ export default function Dashboard() {
       <PixelGrid className="z-[-1]" bgColor="#0a0a0a" pixelColor="#252525" pixelSize={2} pixelSpacing={4} />
       <div className="min-h-screen bg-transparent text-white py-16 px-6">
         <div className="max-w-7xl mx-auto space-y-12">
-          <div className="flex items-start justify-between">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
             <div className="space-y-3">
-              <h1 className="text-5xl font-medium tracking-tight text-white">Near Intents Fee Dashboard</h1>
-              <p className="text-[#888888] text-lg">
+              <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-white">Near Intents Fee Dashboard</h1>
+              <p className="text-[#888888] text-base md:text-lg">
                 This dashboard tracks fees, inflows, and outflows specifically for apps integrating NEAR intents via the 1 Click API. It does not reflect all intents volume. All data is sourced directly from the explorer API.
               </p>
             </div>
@@ -106,14 +106,14 @@ export default function Dashboard() {
               href="https://x.com/surgecodes"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-[#0a0a0a]/70 hover:bg-[#0a0a0a]/90 backdrop-blur-sm border border-[#1a1a1a] rounded-lg transition-colors group"
+              className="flex items-center gap-2 px-4 py-2 bg-[#0a0a0a]/70 hover:bg-[#0a0a0a]/90 backdrop-blur-sm border border-[#1a1a1a] rounded-lg transition-colors group w-fit"
             >
               <img
                 src="https://pbs.twimg.com/profile_images/1957926435001163776/5fkiQIBz_400x400.jpg"
                 alt="surgecodes"
                 className="w-6 h-6 rounded-full"
               />
-              <span className="text-sm text-[#888888] group-hover:text-white transition-colors">
+              <span className="text-sm text-[#888888] group-hover:text-white transition-colors whitespace-nowrap">
                 Built by @surgecodes
               </span>
             </a>
