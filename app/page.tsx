@@ -11,7 +11,7 @@ import { formatCurrency, formatLargeCurrency } from "@/lib/utils"
 import { getTokenIcon, getChainIcon } from "@/constants/icons"
 import type { ProcessedData, TimeHorizon, ProviderAssetFlowData } from "@/types/dashboard"
 
-const DATA_URL = "https://thvomwknsgnklfce.public.blob.vercel-storage.com/referral-fees-processed-GlkybPG0GHmGhquCYrSXkMf1puoLcA.json"
+const DATA_URL = "https://thvomwknsgnklfce.public.blob.vercel-storage.com/referral-fees.json"
 
 export default function Dashboard() {
   const [data, setData] = useState<ProcessedData | null>(null)
@@ -67,7 +67,7 @@ export default function Dashboard() {
   }
 
   const getProviderAssets = (provider: string): ProviderAssetFlowData[] => {
-    if (!data) return []
+    if (!data || !data.providerAssetFlows) return []
     return data.providerAssetFlows
       .filter(flow => flow.provider === provider)
       .sort((a, b) => (b.totalInflowUSD + b.totalOutflowUSD) - (a.totalInflowUSD + a.totalOutflowUSD))
@@ -96,33 +96,33 @@ export default function Dashboard() {
       <div className="min-h-screen bg-transparent text-white py-16 px-6">
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-            <div className="space-y-3">
+          <div className="space-y-3">
               <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-white">Near Intents Fee Dashboard</h1>
               <p className="text-[#888888] text-base md:text-lg">
                 This dashboard tracks fees, inflows, and outflows specifically for apps integrating NEAR intents via the 1 Click API. It does not reflect all intents volume. All data is sourced directly from the explorer API.
               </p>
-            </div>
-            <a
-              href="https://x.com/surgecodes"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-[#0a0a0a]/70 hover:bg-[#0a0a0a]/90 backdrop-blur-sm border border-[#1a1a1a] rounded-lg transition-colors group w-fit"
-            >
-              <img
-                src="https://pbs.twimg.com/profile_images/1957926435001163776/5fkiQIBz_400x400.jpg"
-                alt="surgecodes"
-                className="w-6 h-6 rounded-full"
-              />
-              <span className="text-sm text-[#888888] group-hover:text-white transition-colors whitespace-nowrap">
-                Built by @surgecodes
-              </span>
-            </a>
           </div>
-
+          <a
+            href="https://x.com/surgecodes"
+            target="_blank"
+            rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 bg-[#0a0a0a]/70 hover:bg-[#0a0a0a]/90 backdrop-blur-sm border border-[#1a1a1a] rounded-lg transition-colors group w-fit"
+          >
+            <img
+              src="https://pbs.twimg.com/profile_images/1957926435001163776/5fkiQIBz_400x400.jpg"
+              alt="surgecodes"
+              className="w-6 h-6 rounded-full"
+            />
+              <span className="text-sm text-[#888888] group-hover:text-white transition-colors whitespace-nowrap">
+              Built by @surgecodes
+            </span>
+          </a>
+        </div>
+        
           <Card className="bg-[#0a0a0a]/80 backdrop-blur-sm border-[#1a1a1a] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-[0_8px_40px_rgb(0,0,0,0.5)] transition-shadow">
-            <CardHeader className="pb-8">
+          <CardHeader className="pb-8">
               <div className="flex items-start justify-between">
-                <div>
+            <div>
                   <CardDescription className="text-[#888888] text-sm font-normal mb-2">Cumulative Fees Over Time</CardDescription>
                   <CardTitle className="text-4xl font-semibold text-white">{formatCurrency(data.totalFees)}</CardTitle>
                 </div>
@@ -139,17 +139,17 @@ export default function Dashboard() {
                     </button>
                   ))}
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent className="pt-0 pb-8">
-              <ChartContainer
-                config={{
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0 pb-8">
+            <ChartContainer
+              config={{
                   cumulativeFees: { label: "Cumulative Fees", color: "#ffffff" },
                   dailyFees: { label: "Daily Fees", color: "#1dd1a1" },
-                }}
-                className="h-[320px] w-full"
-              >
-                <ResponsiveContainer width="100%" height="100%">
+              }}
+              className="h-[320px] w-full"
+            >
+              <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart data={chartData} margin={{ top: 20, right: 20, left: 0, bottom: 20 }}>
                     <XAxis dataKey="date" stroke="transparent" tick={{ fill: "#666666", fontSize: 11 }} axisLine={false} tickLine={false} />
                     <YAxis yAxisId="left" stroke="transparent" tick={{ fill: "#666666", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`} />
@@ -181,10 +181,10 @@ export default function Dashboard() {
                     <Bar yAxisId="right" dataKey="dailyFees" fill="rgba(29, 209, 161, 0.2)" radius={[4, 4, 0, 0]} />
                     <Line yAxisId="left" type="monotone" dataKey="cumulativeFees" stroke="#ffffff" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
                   </ComposedChart>
-                </ResponsiveContainer>
-              </ChartContainer>
-            </CardContent>
-          </Card>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </CardContent>
+        </Card>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="bg-[#0a0a0a]/80 backdrop-blur-sm border-[#1a1a1a] shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-[0_8px_40px_rgb(0,0,0,0.5)] transition-shadow">
@@ -200,7 +200,7 @@ export default function Dashboard() {
                   const outflowPercent = total > 0 ? (flow.totalOutflowUSD / total) * 100 : 50
                   
                   return (
-                    <div key={flow.asset} className="relative h-11 flex w-full border-b border-[#1a1a1a] last:border-b-0">
+                    <div key={flow.symbol} className="relative h-11 flex w-full border-b border-[#1a1a1a] last:border-b-0">
                       <div 
                         className="flex items-center text-xs font-mono font-bold text-white relative border-r border-black/40"
                         style={{ width: `${inflowPercent}%`, backgroundColor: 'rgba(29, 209, 161, 0.15)', minWidth: '140px' }}
@@ -233,13 +233,16 @@ export default function Dashboard() {
               <CardHeader>
                 <CardTitle className="text-xl font-medium text-white">Top Chains by Volume</CardTitle>
                 <CardDescription className="text-[#888888] text-sm">Green = deposited into intents · Red = withdrawn from intents</CardDescription>
-              </CardHeader>
-              <CardContent className="p-0">
-                {data.chainFlows.slice(0, 8).map((flow) => {
+          </CardHeader>
+          <CardContent className="p-0">
+                {data.chainFlows && data.chainFlows
+                  .filter(flow => flow.totalOutflowUSD !== undefined && flow.totalOutflowUSD !== null)
+                  .slice(0, 8)
+                  .map((flow) => {
                   const icon = getChainIcon(flow.chain)
-                  const total = flow.totalInflowUSD + flow.totalOutflowUSD
-                  const inflowPercent = total > 0 ? (flow.totalInflowUSD / total) * 100 : 50
-                  const outflowPercent = total > 0 ? (flow.totalOutflowUSD / total) * 100 : 50
+                  const total = (flow.totalInflowUSD || 0) + (flow.totalOutflowUSD || 0)
+                  const inflowPercent = total > 0 ? ((flow.totalInflowUSD || 0) / total) * 100 : 50
+                  const outflowPercent = total > 0 ? ((flow.totalOutflowUSD || 0) / total) * 100 : 50
                   
                   return (
                     <div key={flow.chain} className="relative h-11 flex w-full border-b border-[#1a1a1a] last:border-b-0">
@@ -295,20 +298,20 @@ export default function Dashboard() {
                     <Collapsible key={entry.referral} open={isExpanded} onOpenChange={() => toggleProvider(entry.referral)} className="group">
                       <CollapsibleTrigger className="w-full border-b border-[#151515] hover:bg-[#0f0f0f] transition-colors cursor-pointer">
                         <div className="grid grid-cols-[auto_1fr_auto_auto_auto] gap-4 px-6 py-5 items-center">
-                          <span
-                            className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
+                    <span
+                      className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium ${
                               index === 0 ? "bg-yellow-400/10 text-yellow-400" :
                               index === 1 ? "bg-slate-300/10 text-slate-300" :
                               index === 2 ? "bg-orange-400/10 text-orange-400" : "text-[#666666]"
-                            }`}
-                          >
-                            {index + 1}
-                          </span>
+                      }`}
+                    >
+                      {index + 1}
+                    </span>
                           <div className="flex flex-col items-start gap-1">
                             <div className="text-white font-normal truncate">{entry.referral}</div>
                             {providerFlow && (
                               <div className="text-xs text-[#666666]">
-                                {providerFlow.transactionCount} txns · {formatCurrency(providerFlow.totalInflowUSD + providerFlow.totalOutflowUSD)} vol
+                                {providerFlow.transactionCount} transactions
                               </div>
                             )}
                           </div>
@@ -322,10 +325,10 @@ export default function Dashboard() {
                             ) : (
                               <div className="text-xs text-[#666666]">-</div>
                             )}
-                          </div>
-                          <div className={`flex items-center font-mono text-sm ${entry.totalFeesUSD === 0 ? 'text-[#666666]' : 'text-white'}`}>
-                            {formatLargeCurrency(entry.totalFeesUSD)}
-                          </div>
+                  </div>
+                  <div className={`flex items-center font-mono text-sm ${entry.totalFeesUSD === 0 ? 'text-[#666666]' : 'text-white'}`}>
+                    {formatLargeCurrency(entry.totalFeesUSD)}
+                  </div>
                           <ChevronDown className={`w-4 h-4 text-[#666666] transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                         </div>
                       </CollapsibleTrigger>
@@ -339,7 +342,7 @@ export default function Dashboard() {
                               const outflowPercent = total > 0 ? (flow.totalOutflowUSD / total) * 100 : 50
                               
                               return (
-                                <div key={`${flow.provider}-${flow.asset}`} className="relative h-11 flex w-full border-b border-[#151515]">
+                                <div key={`${flow.provider}-${flow.symbol}`} className="relative h-11 flex w-full border-b border-[#151515]">
                                   <div 
                                     className="flex items-center text-[10px] font-mono font-bold text-white relative border-r border-black/40"
                                     style={{ width: `${inflowPercent}%`, backgroundColor: 'rgba(29, 209, 161, 0.1)', minWidth: '140px' }}
@@ -361,8 +364,8 @@ export default function Dashboard() {
                                     style={{ width: `${outflowPercent}%`, backgroundColor: 'rgba(192, 57, 43, 0.1)' }}
                                   >
                                     {outflowPercent > 20 && formatCurrency(flow.totalOutflowUSD)}
-                                  </div>
-                                </div>
+                  </div>
+                </div>
                               )
                             })}
                           </>
@@ -373,9 +376,63 @@ export default function Dashboard() {
                     </Collapsible>
                   )
                 })}
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </CardContent>
+        </Card>
+
+      
+
+          <Card className="bg-[#0a0a0a]/80 backdrop-blur-sm border border-[#1a1a1a] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.4)]">
+            <CardHeader className="pb-6">
+              <CardTitle className="text-2xl font-medium text-white mb-2">Most Popular Swap Routes</CardTitle>
+              <CardDescription className="text-[#888888] text-sm">Top trading pairs by volume</CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              {data.topRoutes && data.topRoutes.length > 0 ? (
+                <div>
+                  {data.topRoutes.slice(0, 15).map((route, idx) => {
+                    const maxVolume = data.topRoutes[0].volumeUSD
+                    const barWidth = (route.volumeUSD / maxVolume) * 100
+                    const fromIcon = getTokenIcon(route.fromAsset)
+                    const toIcon = getTokenIcon(route.toAsset)
+                    
+                    return (
+                      <div key={`${route.fromAsset}-${route.toAsset}`} className="relative h-16 border-b border-[#151515] hover:bg-white/5 transition-colors group">
+                        <div 
+                          className="absolute left-0 top-0 h-full transition-all duration-300"
+                          style={{ width: `${barWidth}%`, backgroundColor: 'rgba(29, 209, 161, 0.08)' }} 
+                        />
+                        <div className="relative px-6 h-full flex items-center justify-between">
+                          <div className="flex items-center gap-4 flex-1">
+                            <span className="text-sm font-medium text-[#666666] w-6">{idx + 1}</span>
+                            <div className="flex items-center gap-2">
+                              {fromIcon && <img src={fromIcon} alt={route.fromAsset} className="w-6 h-6" />}
+                              <span className="text-base font-semibold text-white">{route.fromAsset}</span>
+                              <svg className="w-4 h-4 text-[#666666]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                              </svg>
+                              {toIcon && <img src={toIcon} alt={route.toAsset} className="w-6 h-6" />}
+                              <span className="text-base font-semibold text-white">{route.toAsset}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-6">
+                            <div className="text-right">
+                              <div className="text-lg font-mono font-semibold text-white">
+                                {formatCurrency(route.volumeUSD)}
+                              </div>
+                              <div className="text-xs text-[#666666]">{route.count.toLocaleString()} swaps</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <div className="px-6 py-16 text-center text-sm text-[#666666]">No swap route data</div>
+              )}
+          </CardContent>
+        </Card>
         </div>
       </div>
     </>

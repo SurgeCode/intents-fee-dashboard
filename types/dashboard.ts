@@ -49,13 +49,21 @@ export interface ProviderAssetFlowData {
   outflowCount: number
 }
 
+export interface RouteData {
+  fromAsset: string
+  toAsset: string
+  volumeUSD: number
+  count: number
+}
+
 export interface ProcessedData {
   leaderboard: LeaderboardEntry[]
   chartData: ChartDataPoint[]
   assetFlows: AssetFlowData[]
-  chainFlows: ChainFlowData[]
+  chainFlows?: ChainFlowData[]
   providerFlows: ProviderFlowData[]
-  providerAssetFlows: ProviderAssetFlowData[]
+  providerAssetFlows?: ProviderAssetFlowData[]
+  topRoutes: RouteData[]
   totalInflowUSD: number
   totalOutflowUSD: number
   totalFees: number
